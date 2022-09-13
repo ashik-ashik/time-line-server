@@ -31,7 +31,7 @@ const runApp = async () => {
 
     // get posts
     app.get("/posts", async (req, res)=> {
-      const result = await postsCollections.find({}).toArray();
+      const result = await postsCollections.find({}).sort({_id:-1}).toArray();
       res.json(result);
     });
 
