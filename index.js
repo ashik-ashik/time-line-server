@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const objectId = require("mongodb").objectId;
+const objectId = require("mongodb").ObjectId;
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 const port = process.env.PORT || 5000;
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.muk27.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -33,6 +33,22 @@ const runApp = async () => {
     app.get("/posts", async (req, res)=> {
       const result = await postsCollections.find({}).sort({_id:-1}).toArray();
       res.json(result);
+    });
+
+    // update
+    app.put("/edit/:id", async (req, res) => {
+      const query = {_id : ObjectId(req.params.id)}
+      const data = {$set : req.body};
+
+      const result = await postsCollections.updateOne(query, data);
+      res.json(result)
+    })
+
+    // delete
+    app.delete("/delete/:id", async(req, res) => {
+      const query = {_id : ObjectId(req.params.id)};
+      const result = await postsCollections.deleteOne(query);
+      res.json(result)
     });
 
   } finally{
