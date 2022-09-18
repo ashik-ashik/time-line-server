@@ -20,6 +20,7 @@ const runApp = async () => {
     // create database and data-tables
     const database = client.db('my-time-line');
     const postsCollections = database.collection('posts');
+    const memberCollections = database.collection('members');
 
     // post 
     app.post('/post', async (req, res) => {
@@ -50,6 +51,20 @@ const runApp = async () => {
       const result = await postsCollections.deleteOne(query);
       res.json(result)
     });
+
+    // member save
+    app.post('/member', async(req, res) => {
+      const result = await memberCollections.insertOne(req.body);
+      res.json(result);
+    });
+
+    // load members
+    app.get('/member/:email', async (req, res)=>{
+      const query = {email:req.params.email};
+      console.log(req.params.email);
+      const result = await memberCollections.findOne(query);
+      res.json(result);
+    })
 
   } finally{
 
