@@ -61,9 +61,16 @@ const runApp = async () => {
     // load members
     app.get('/member/:email', async (req, res)=>{
       const query = {email:req.params.email};
-      console.log(req.params.email);
       const result = await memberCollections.findOne(query);
       res.json(result);
+    });
+
+    // get single one
+    app.get("/timeline/:id", async (req, res) => {
+      const query = {_id : ObjectId(req.params.id)};
+      console.log(req.params.id);
+      const result = await postsCollections.findOne(query);
+      res.json(result)
     })
 
   } finally{
