@@ -21,6 +21,7 @@ const runApp = async () => {
     const database = client.db('my-time-line');
     const postsCollections = database.collection('posts');
     const memberCollections = database.collection('members');
+    const mybooksCollections = database.collection('mybooks');
 
     // post 
     app.post('/post', async (req, res) => {
@@ -68,10 +69,36 @@ const runApp = async () => {
     // get single one
     app.get("/timeline/:id", async (req, res) => {
       const query = {_id : ObjectId(req.params.id)};
-      console.log(req.params.id);
       const result = await postsCollections.findOne(query);
       res.json(result)
+    });
+
+    // post books
+    app.post('/books', async (req, res) => {
+      const result = await mybooksCollections.insertOne(req.body);
+      res.json(result);
     })
+    // load books
+    app.get('/books', async (req, res) => {
+      const result = await mybooksCollections.find({}).toArray();
+      res.json(result);
+    })
+    // find book by id
+    app.get('/books/:id', async (req, res) => {
+      const query = {_id : ObjectId(req.params.id)}
+      const result = await mybooksCollections.findOne(query);
+      res.json(result)
+    })
+    // edit books
+    app.put('/books/:id', async (req, res) => {
+      const query = {_id : ObjectId(req.params.id)}
+      const data = {$set : req.body};
+
+      const result = await mybooksCollections.updateOne(query, data);
+      res.json(result)
+    })
+
+
 
   } finally{
 
