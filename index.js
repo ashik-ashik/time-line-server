@@ -93,8 +93,14 @@ const runApp = async () => {
     app.put('/books/:id', async (req, res) => {
       const query = {_id : ObjectId(req.params.id)}
       const data = {$set : req.body};
-
       const result = await mybooksCollections.updateOne(query, data);
+      res.json(result)
+    });
+
+    // delete book
+    app.delete('/book/:id', async (req, res)=>{
+      const query = {_id : ObjectId(req.params.id)};
+      const result = await mybooksCollections.deleteOne(query);
       res.json(result)
     })
 
