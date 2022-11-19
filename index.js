@@ -22,7 +22,7 @@ const runApp = async () => {
     const postsCollections = database.collection('posts');
     const memberCollections = database.collection('members');
     const mybooksCollections = database.collection('mybooks');
-
+    
     // post 
     app.post('/post', async (req, res) => {
       const data = req.body;
@@ -101,6 +101,34 @@ const runApp = async () => {
     app.delete('/book/:id', async (req, res)=>{
       const query = {_id : ObjectId(req.params.id)};
       const result = await mybooksCollections.deleteOne(query);
+      res.json(result)
+    });
+
+    // database generate for password
+    const platformCollec = database.collection('platform');
+    const passwordCollec = database.collection('passwords');
+    // post platform
+    app.post('/platform', async (req, res)=>{
+      const result = await platformCollec.insertOne(req.body);
+      res.json(result)
+    });
+
+    // load platform
+    app.get('/platform', async (req, res)=>{
+      const query = {member:req.query.id};
+      const result = await platformCollec.find(query).toArray();
+      res.json(result);
+    });
+
+    // post passwords and accounts
+    app.post('/password', async(req, res)=>{
+      const result = await passwordCollec.insertOne(req.body);
+      res.json(result);
+    });
+    // load password
+    app.get('/password', async(req, res)=>{
+      const query = req.query;
+      const result = await passwordCollec.find(query).toArray();
       res.json(result)
     })
 
