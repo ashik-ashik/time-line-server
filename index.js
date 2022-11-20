@@ -59,10 +59,15 @@ const runApp = async () => {
       res.json(result);
     });
 
-    // load members
+    // load single members
     app.get('/member/:email', async (req, res)=>{
       const query = {email:req.params.email};
       const result = await memberCollections.findOne(query);
+      res.json(result);
+    });
+    // load single members
+    app.get('/members', async (req, res)=>{
+      const result = await memberCollections.find({}).toArray();
       res.json(result);
     });
 
