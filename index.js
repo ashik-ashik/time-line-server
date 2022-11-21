@@ -135,7 +135,48 @@ const runApp = async () => {
       const query = req.query;
       const result = await passwordCollec.find(query).toArray();
       res.json(result)
+    });
+
+
+    // 
+    // 
+    // R320 collections and apis
+    const r320MemberCollection = database.collection('r320member');
+    const r320CostsCollection = database.collection('r320Costs');
+    const r320PayCollection = database.collection('r320Pay');
+
+    // post members
+    app.post('/r320-member', async(req,res)=>{
+      const result = await r320MemberCollection.insertOne(req.body);
+      res.json(result);
+    });
+    // load members
+    app.get('/r320-members', async(req, res)=> {
+      const result = await r320MemberCollection.find({}).toArray();
+      res.json(result);
     })
+
+    // post new cost
+    app.post('/r320-cost', async (req, res)=>{
+      const result = await r320CostsCollection.insertOne(req.body);
+      res.json(result);
+    });
+    // consts load
+    app.get('/r320-costs', async(req, res)=> {
+      const result = await r320CostsCollection.find({}).sort({_id:-1}).toArray();
+      res.json(result)
+    });
+
+    // post new pay
+    app.post('/r320-pay', async(req, res)=>{
+      const result = await r320PayCollection.insertOne(req.body);
+      res.json(result);
+    });
+    // load pays
+    app.get('/r320-pays', async (req, res)=>{
+      const result = await r320PayCollection.find({}).sort({_id:-1}).toArray();
+      res.json(result);
+    });
 
 
 
