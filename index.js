@@ -177,6 +177,32 @@ const runApp = async () => {
       const result = await r320PayCollection.find({}).sort({_id:-1}).toArray();
       res.json(result);
     });
+    // load single pay
+    app.get('/r320-pay/:id', async(req, res) => {
+      const query = {_id : ObjectId(req.params.id)};
+      const result = await r320PayCollection.findOne(query);
+      res.json(result);
+    });
+    // update pay
+    app.put('/r320-pay/:id', async(req, res)=>{
+      const query = {_id : ObjectId(req.params.id)};
+      const update = {$set : req.body};
+      const result = await r320PayCollection.updateOne(query, update);
+      res.json(result);
+    })
+    // load single cost
+    app.get('/r320-cost/:id', async(req, res) => {
+      const query = {_id : ObjectId(req.params.id)};
+      const result = await r320CostsCollection.findOne(query);
+      res.json(result);
+    });
+    // update pay
+    app.put('/r320-cost/:id', async(req, res)=>{
+      const query = {_id : ObjectId(req.params.id)};
+      const update = {$set : req.body};
+      const result = await r320CostsCollection.updateOne(query, update);
+      res.json(result);
+    })
 
 
 
