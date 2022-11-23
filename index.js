@@ -202,7 +202,22 @@ const runApp = async () => {
       const update = {$set : req.body};
       const result = await r320CostsCollection.updateOne(query, update);
       res.json(result);
-    })
+    });
+
+    // delete multi cost action api
+    app.delete('/delete-cost', async(req, res)=>{
+      const ids = req.query.ids.split(',');
+      const query = ids.map(id => ObjectId(id));
+      const result = await r320CostsCollection.deleteMany({_id : {$in : query}});
+      res.json(result);
+    });
+    // delete multi cost action api
+    app.delete('/delete-pay', async(req, res)=>{
+      const ids = req.query.ids.split(',');
+      const query = ids.map(id => ObjectId(id));
+      const result = await r320PayCollection.deleteMany({_id : {$in : query}});
+      res.json(result);
+    });
 
 
 
