@@ -136,6 +136,13 @@ const runApp = async () => {
       const result = await passwordCollec.find(query).toArray();
       res.json(result)
     });
+    // delete platform with all passwords
+    app.delete('/delete-platform', async (req, res)=> {
+      const {id, platform} = req.query;
+      const platformPasswordDelete = await passwordCollec.deleteMany({platform: platform});
+      await platformCollec.deleteOne({_id : ObjectId(id)});
+      res.json(platformPasswordDelete)
+    })
 
 
     // 
