@@ -55,7 +55,10 @@ const runApp = async () => {
 
     // member save
     app.post('/member', async(req, res) => {
-      const result = await memberCollections.insertOne(req.body);
+      const query = {email : req.body.email};
+      const update = {$set : req.body};
+      const options = { upsert: true };
+      const result = await memberCollections.updateOne(query, update, options);
       res.json(result);
     });
 
@@ -164,8 +167,9 @@ const runApp = async () => {
 
     // post members
     app.post('/r320-member', async(req,res)=>{
+      
       const result = await r320MemberCollection.insertOne(req.body);
-      res.json(result);
+      res.json('result');
     });
     // load members
     app.get('/r320-members', async(req, res)=> {
@@ -235,6 +239,14 @@ const runApp = async () => {
       const result = await r320PayCollection.deleteMany({_id : {$in : query}});
       res.json(result);
     });
+
+    // update member role
+    app.put('/update-role/:id', async(req, res)=>{
+      const query = {_id : ObjectId(req.params.id)};
+      const update = {$set : req.body};
+      const result = await memberCollections.updateOne(query, update);
+      res.json(result);
+    })
 
 
 
