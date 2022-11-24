@@ -142,6 +142,16 @@ const runApp = async () => {
       const platformPasswordDelete = await passwordCollec.deleteMany({platform: platform});
       await platformCollec.deleteOne({_id : ObjectId(id)});
       res.json(platformPasswordDelete)
+    });
+    // delete single password
+    app.delete('/delete-password/:id', async(req, res)=>{
+      const result = await passwordCollec.deleteOne({_id : ObjectId(req.params.id)});
+      res.json(result);
+    });
+    // delete all passwords
+    app.delete('/delete-passwords/:platform', async(req, res)=>{
+      const result = await passwordCollec.deleteMany({platform : req.params.platform});
+      res.json(result);
     })
 
 
