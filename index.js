@@ -167,9 +167,8 @@ const runApp = async () => {
 
     // post members
     app.post('/r320-member', async(req,res)=>{
-      
       const result = await r320MemberCollection.insertOne(req.body);
-      res.json('result');
+      res.json(result);
     });
     // load members
     app.get('/r320-members', async(req, res)=> {
@@ -184,8 +183,9 @@ const runApp = async () => {
     });
     // consts load
     app.get('/r320-costs', async(req, res)=> {
-      const result = await r320CostsCollection.find({}).sort({_id:-1}).toArray();
-      res.json(result)
+      const query = req.query
+      // const result = await r320CostsCollection.find({}).sort({_id:-1}).toArray();
+      res.json('result')
     });
 
     // post new pay
