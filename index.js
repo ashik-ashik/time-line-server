@@ -184,8 +184,8 @@ const runApp = async () => {
     // consts load
     app.get('/r320-costs', async(req, res)=> {
       const query = req.query
-      // const result = await r320CostsCollection.find({}).sort({_id:-1}).toArray();
-      res.json('result')
+      const result = await r320CostsCollection.find(req.query).sort({_id:-1}).toArray();
+      res.json(result)
     });
 
     // post new pay
@@ -195,7 +195,7 @@ const runApp = async () => {
     });
     // load pays
     app.get('/r320-pays', async (req, res)=>{
-      const result = await r320PayCollection.find({}).sort({_id:-1}).toArray();
+      const result = await r320PayCollection.find(req.query).sort({_id:-1}).toArray();
       res.json(result);
     });
     // load single pay
