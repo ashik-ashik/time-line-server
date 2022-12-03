@@ -258,7 +258,10 @@ runApp().catch(console.dir);
 
 app.get('/', (req, res) => {
   res.send("This server is running!")
-})
+});
+app.get('/test', (req, res) => {
+  res.json({test:"I am testing this api server!!!"});
+});
 
 app.listen(port, ()=> {
   console.log("Time Line is running!");
