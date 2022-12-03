@@ -257,7 +257,7 @@ const runApp = async () => {
 runApp().catch(console.dir);
 
 app.get('/', (req, res) => {
-  res.send("This server is running!")
+  res.send("This server is running. My time line server is working!")
 });
 app.get('/test', (req, res) => {
   res.send({name:"Test", author:"Md_Ashik_Ali"})
